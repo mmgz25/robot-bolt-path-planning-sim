@@ -39,10 +39,6 @@ def detect_bolts(img, obj_size=(1.0,1.0), img_pixels=500):
             detected.append([real_x, real_y])
     return np.array(detected)
 
-### Check robot reachability
-def in_reach(pt):
-    return np.linalg.norm(pt - robot_base) <= robot_reach
-
 ### Path planning using TSP
 def plan_path(bolts, start=robot_base):
     pts = bolts.copy()
@@ -72,6 +68,11 @@ def scara_fk(theta1, theta2):
     y2 = y1 + L2 * np.sin(theta1 + theta2)
     return np.array([x1, y1]), np.array([x2, y2])
 
+
+### Check robot reachability
+def in_reach(pt):
+    return np.linalg.norm(pt - robot_base) <= robot_reach
+    
 ### SCARA robot motion
 def scara_motion(path):
     import matplotlib.animation as ani
@@ -152,3 +153,4 @@ def run_simulation():
 
 ### MAIN EXECUTION
 run_simulation()
+
