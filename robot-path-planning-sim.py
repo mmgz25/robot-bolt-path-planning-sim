@@ -12,7 +12,7 @@ L1 = 0.5
 L2 = 0.5
 robot_reach = L1 + L2
 
-### Define environment
+### Define environment, anchored at (0,0)
 max_bolts = 5
 min_bolts = 0
 obj_size = (1.0, 1.0)
@@ -86,8 +86,8 @@ def scara_motion(path,ax,fig):
     import matplotlib.animation as ani
 
     if len(path) == 0: # No path, no motion
-        ax.set_xlim(-0.1, 1.1)
-        ax.set_ylim(-0.5, 1.1)
+        ax.set_xlim(obj_size[0]-1.1, obj_size[1]+0.1)
+        ax.set_ylim(obj_size[0]-1.5, obj_size[1]+0.1)
         ax.set_aspect('equal')
         ax.set_title('No Robot Motion')
         return None
@@ -98,13 +98,13 @@ def scara_motion(path,ax,fig):
         thetas.append((theta1, theta2)) 
     thetas = np.array(thetas)
 
-    ax.set_xlim(-0.1, 1.1)
-    ax.set_ylim(-0.5, 1.1)
+    ax.set_xlim(obj_size[0]-1.1, obj_size[1]+0.1)
+    ax.set_ylim(obj_size[0]-1.5, obj_size[1]+0.1)
     ax.set_aspect('equal')
     ax.set_title('SCARA Robot Motion')
 
     # Object
-    obj = plt.Rectangle((0, 0), 1.0, 1.0, linewidth=1, edgecolor='black', facecolor='grey')
+    obj = plt.Rectangle((0, 0), obj_size[0], obj_size[1], linewidth=1, edgecolor='black', facecolor='grey')
     ax.add_patch(obj)
 
     # Robot links
@@ -171,8 +171,8 @@ def execute():
         ax1.scatter(robot_base[0], robot_base[1], c="magenta", s=100, label="Robot Base")
         ax1.set_title(f"Bolt Detection and Path Planning")
         ax1.legend(loc='upper left',bbox_to_anchor=(1,1))
-        ax1.set_xlim([-0.1, 1.1])
-        ax1.set_ylim([-0.1, 1.1])
+        ax1.set_xlim([obj_size[0]-1.1, obj_size[1]+0.1])
+        ax1.set_ylim([obj_size[0]-1.1, obj_size[1]+0.1])
         ax1.set_aspect('equal')
 
         # Right plot: SCARA robot motion
@@ -183,4 +183,3 @@ def execute():
 
 ### MAIN EXECUTION
 execute()
-
